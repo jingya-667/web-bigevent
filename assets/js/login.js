@@ -11,9 +11,9 @@ $(function () {
     var form = layui.form;
     var layer = layui.layer;
     form.verify({
-        pwd: [/^[\s]{6,12}$]/, '密码必须6到12位,且不能出现空格'],
+        pwd: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'],
         repwd: function (value) {
-            var pwd = $('.reg-box[name=password]').val();
+            var pwd = $('.reg-box [name=password]').val();
             if (pwd !== value) {
                 return '两次密码不一致!'
             }
@@ -23,10 +23,10 @@ $(function () {
     $('#form_reg').on('submit', function (e) {
         e.preventDefault();
         var data = {
-            username: $('#form_reg[name=username]').val(),
-            password: $('#form_reg[name=password]').val()
-        }
-        $.post('http://ajax.frontend.itheima.net/api/reguser', data, function (res) {
+            username: $('#form_reg [name=username]').val(),
+            password: $('#form_reg [name=password]').val()
+        };
+        $.post('/api/reguser', data, function (res) {
             if (res.status !== 0) {
                 return layer.msg(res.message)
             }
@@ -50,7 +50,7 @@ $(function () {
                 layer.msg('登录成功!')
                 //将登录成功的token保存到localstorage中
                 localStorage.setItem('token', res.token)
-                location.herf = '/index.html'
+                location.href = '/index.html'
             }
         })
     })
